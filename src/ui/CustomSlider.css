@@ -1,0 +1,167 @@
+.custom-slider-container {
+    width: 100%;
+    position: relative;
+}
+
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 30px;
+}
+
+.slider-track {
+    position: relative;
+    width: 100%;
+}
+
+.slider-input {
+    width: 100%;
+    appearance: none;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, #cce5ff, #3EA2F7);
+    outline: none;
+    position: relative;
+    z-index: 2;
+}
+
+.slider-tooltip {
+    position: absolute;
+    transform: translateX(-50%);
+    background-color: transparent;
+    color: #333;
+    padding: 2px 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.slider-tooltip.visible {
+    opacity: 1;
+}
+
+.slider-tooltip.top {
+    top: 11px;
+}
+
+.slider-tooltip.bottom {
+    bottom: -20px;
+}
+
+
+.slider-tooltip.visible {
+    opacity: 1;
+}
+
+.slider-mark {
+    position: absolute;
+    top: -20px;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 1;
+}
+
+.mark-dot {
+    width: 6px;
+    height: 6px;
+    background-color: black;
+    border-radius: 50%;
+    margin: 0 auto 2px auto;
+}
+
+.mark-label {
+    font-size: 10px;
+    color: #333;
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.slider-track {
+    position: relative;
+    width: 100%;
+    height: 40px;
+}
+
+.slider-input {
+    width: 100%;
+    appearance: none;
+    height: 20px;
+    border-radius: 50px;
+    background: linear-gradient(to right, #cce5ff, #3EA2F7);
+    outline: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.slider-input::-moz-range-thumb {
+    background-color: white;
+}
+
+.slider-mark {
+    position: absolute;
+    top: 11px;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 3;
+}
+
+.mark-dot {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #3EA2F7;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin: 0;
+}
+
+.mark-label {
+    font-size: 10px;
+    color: #333;
+}
+
+.slider-tooltip.central {
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+}
+
+.slider-track:hover .slider-tooltip.central {
+    opacity: 1;
+}
+
+.slider-tooltip.visible {
+    opacity: 1 !important;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: 0px;
+    background-color: #ffffff;
+    border-radius: 1.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+    outline: 3px solid #ffffff;
+    outline-offset: 0.125rem;
+    height: 1rem;
+    width: 1rem;
+}

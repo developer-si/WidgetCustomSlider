@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="com.dvgroup.customslider.CustomSlider" pluginWidget="true" needsEntityContext="true"
+    offlineCapable="true"
+    supportedPlatform="Web"
+    xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Custom Slider</name>
+    <description>CustomSlider</description>
+    <icon />
+    <properties>
+        <propertyGroup caption="General">
+            <propertyGroup caption="Minimum">
+                <property key="minValueType" type="enumeration" defaultValue="static">
+                    <caption>Minimum value type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="static">Static</enumerationValue>
+                        <enumerationValue key="dynamic">Dynamic</enumerationValue>
+                        <enumerationValue key="expression">Expression</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="minStaticValue" type="decimal" defaultValue="0">
+                    <caption>Minimum value</caption>
+                    <description>The minimum value of the slider.</description>
+                </property>
+                <property key="minDynamicValue" type="attribute" required="false">
+                    <caption>Minimum value</caption>
+                    <description>The minimum value of the slider.</description>
+                    <attributeTypes>
+                        <attributeType name="Decimal" />
+                        <attributeType name="Integer" />
+                        <attributeType name="Long" />
+                    </attributeTypes>
+                </property>
+                <property key="minExpressionValue" type="expression" required="false">
+                    <caption>Minimum value</caption>
+                    <description>The minimum value of the slider.</description>
+                    <returnType type="Decimal" />
+                </property>
+                <property key="minShowTooltip" type="boolean" defaultValue="true">
+                    <caption>Show tooltip</caption>
+                    <description />
+                </property>
+                <property key="minTooltipType" type="enumeration" defaultValue="value">
+                    <caption>Tooltip type</caption>
+                    <description>By default tooltip shows current value. Choose 'Custom' to create your own template.</description>
+                    <enumerationValues>
+                        <enumerationValue key="value">Current value</enumerationValue>
+                        <enumerationValue key="customText">Custom</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="minTooltipTemplate" type="textTemplate" required="false">
+                    <caption>Tooltip</caption>
+                    <description />
+                </property>
+                <property key="minTooltipPosition" type="enumeration" defaultValue="bottom">
+                    <caption>Tooltip position</caption>
+                    <description>By default tooltip is on bottom.</description>
+                    <enumerationValues>
+                        <enumerationValue key="top">Top</enumerationValue>
+                        <enumerationValue key="bottom">Bottom</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="minTooltipAlwaysVisible" type="boolean" defaultValue="false">
+                    <caption>Tooltip always visible</caption>
+                    <description>When enabled tooltip is always visible to the user</description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Maximum">
+                <property key="maxValueType" type="enumeration" defaultValue="static">
+                    <caption>Maximum value type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="static">Static</enumerationValue>
+                        <enumerationValue key="dynamic">Dynamic</enumerationValue>
+                        <enumerationValue key="expression">Expression</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="maxStaticValue" type="decimal" defaultValue="100">
+                    <caption>Maximum value</caption>
+                    <description>The maximum value of the slider.</description>
+                </property>
+                <property key="maxDynamicValue" type="attribute" required="false">
+                    <caption>Maximum value</caption>
+                    <description>The maximum value of the slider.</description>
+                    <attributeTypes>
+                        <attributeType name="Integer" />
+                        <attributeType name="Long" />
+                        <attributeType name="Decimal" />
+                    </attributeTypes>
+                </property>
+                <property key="maxExpressionValue" type="expression" required="false">
+                    <caption>Maximum value</caption>
+                    <description>The maximum value of the slider.</description>
+                    <returnType type="Decimal" />
+                </property>
+                <property key="maxShowTooltip" type="boolean" defaultValue="true">
+                    <caption>Show tooltip</caption>
+                    <description />
+                </property>
+                <property key="maxTooltipType" type="enumeration" defaultValue="value">
+                    <caption>Tooltip type</caption>
+                    <description>By default tooltip shows current value. Choose 'Custom' to create your own template.</description>
+                    <enumerationValues>
+                        <enumerationValue key="value">Current value</enumerationValue>
+                        <enumerationValue key="customText">Custom</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="maxTooltipTemplate" type="textTemplate" required="false">
+                    <caption>Tooltip</caption>
+                    <description />
+                </property>
+                <property key="maxTooltipPosition" type="enumeration" defaultValue="bottom">
+                    <caption>Tooltip position</caption>
+                    <description>By default tooltip is on bottom.</description>
+                    <enumerationValues>
+                        <enumerationValue key="top">Top</enumerationValue>
+                        <enumerationValue key="bottom">Bottom</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="maxTooltipAlwaysVisible" type="boolean" defaultValue="false">
+                    <caption>Tooltip always visible</caption>
+                    <description>When enabled tooltip is always visible to the user</description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Step">
+                <property key="stepValueType" type="enumeration" defaultValue="static">
+                    <caption>Step size type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="static">Static</enumerationValue>
+                        <enumerationValue key="dynamic">Dynamic</enumerationValue>
+                        <enumerationValue key="expression">Expression</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="stepStaticValue" type="decimal" defaultValue="1">
+                    <caption>Step size</caption>
+                    <description>Value to be added or subtracted on each step the slider makes. Must be greater than zero, and max - min should be evenly divisible by the step value.</description>
+                </property>
+                <property key="stepDynamicValue" type="attribute" required="false">
+                    <caption>Step size</caption>
+                    <description>Value to be added or subtracted on each step the slider makes. Must be greater than zero, and max - min should be evenly divisible by the step value.</description>
+                    <attributeTypes>
+                        <attributeType name="Integer" />
+                        <attributeType name="Long" />
+                        <attributeType name="Decimal" />
+                    </attributeTypes>
+                </property>
+                <property key="stepExpressionValue" type="expression" required="false">
+                    <caption>Step size</caption>
+                    <description>Value to be added or subtracted on each step the slider makes. Must be greater than zero, and max - min should be evenly divisible by the step value.</description>
+                    <returnType type="Decimal" />
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Value">
+                <property key="sliderValueType" type="enumeration" defaultValue="static">
+                    <caption>Value size type</caption>
+                    <description />
+                    <enumerationValues>
+                        <enumerationValue key="static">Static</enumerationValue>
+                        <enumerationValue key="dynamic">Dynamic</enumerationValue>
+                        <enumerationValue key="expression">Expression</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="sliderStaticValue" type="decimal" defaultValue="1">
+                    <caption>Value size</caption>
+                    <description>Value to be added or subtracted on each step the slider makes. Must be greater than zero, and max - min should be evenly divisible by the step value.</description>
+                </property>
+                <property key="sliderDynamicValue" type="attribute" required="false">
+                    <caption>Value size</caption>
+                    <description>Value to be added or subtracted on each step the slider makes. Must be greater than zero, and max - min should be evenly divisible by the step value.</description>
+                    <attributeTypes>
+                        <attributeType name="Integer" />
+                        <attributeType name="Long" />
+                        <attributeType name="Decimal" />
+                    </attributeTypes>
+                </property>
+                <property key="sliderExpressionValue" type="expression" required="false">
+                    <caption>Value size</caption>
+                    <description>Value to be added or subtracted on each step the slider makes. Must be greater than zero, and max - min should be evenly divisible by the step value.</description>
+                    <returnType type="Decimal" />
+                </property>
+                <property key="sliderShowTooltip" type="boolean" defaultValue="true">
+                    <caption>Show tooltip</caption>
+                    <description />
+                </property>
+                <property key="sliderTooltipType" type="enumeration" defaultValue="value">
+                    <caption>Tooltip type</caption>
+                    <description>By default tooltip shows current value. Choose 'Custom' to create your own template.</description>
+                    <enumerationValues>
+                        <enumerationValue key="value">Current value</enumerationValue>
+                        <enumerationValue key="customText">Custom</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="sliderTooltipTemplate" type="textTemplate" required="false">
+                    <caption>Tooltip</caption>
+                    <description />
+                </property>
+                <property key="sliderTooltipPosition" type="enumeration" defaultValue="top">
+                    <caption>Tooltip position</caption>
+                    <description>By default tooltip is on top.</description>
+                    <enumerationValues>
+                        <enumerationValue key="top">Top</enumerationValue>
+                        <enumerationValue key="bottom">Bottom</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="sliderTooltipAlwaysVisible" type="boolean" defaultValue="false">
+                    <caption>Tooltip always visible</caption>
+                    <description>When enabled tooltip is always visible to the user</description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Marks">
+                <property key="marks" type="object" isList="true" required="false">
+                    <caption>Marks</caption>
+                    <description>Optional visual markers along the slider</description>
+                    <properties>
+                        <propertyGroup caption="Mark">
+                            <property key="positionType" type="enumeration" defaultValue="static">
+                                <caption>Position type</caption>
+                                <description>Choose how the position is defined.</description>
+                                <enumerationValues>
+                                    <enumerationValue key="static">Static</enumerationValue>
+                                    <enumerationValue key="dynamic">Dynamic</enumerationValue>
+                                    <enumerationValue key="expression">Expression</enumerationValue>
+                                </enumerationValues>
+                            </property>
+                            <property key="positionStatic" type="decimal" defaultValue="0">
+                                <caption>Static position</caption>
+                                <description>Static position on the slider (between min and max)</description>
+                            </property>
+                            <property key="positionDynamic" type="attribute" required="false">
+                                <caption>Dynamic position</caption>
+                                <description>Attribute for dynamic mark position</description>
+                                <attributeTypes>
+                                    <attributeType name="Decimal" />
+                                    <attributeType name="Integer" />
+                                    <attributeType name="Long" />
+                                </attributeTypes>
+                            </property>
+                            <property key="positionExpression" type="expression" required="false">
+                                <caption>Expression position</caption>
+                                <description>Expression for mark position</description>
+                                <returnType type="Decimal" />
+                            </property>
+                            <property key="labelType" type="enumeration" defaultValue="static">
+                                <caption>Label type</caption>
+                                <description>Choose how the label is defined.</description>
+                                <enumerationValues>
+                                    <enumerationValue key="static">Static</enumerationValue>
+                                    <enumerationValue key="dynamic">Dynamic</enumerationValue>
+                                    <enumerationValue key="expression">Expression</enumerationValue>
+                                </enumerationValues>
+                            </property>
+                            <property key="labelStatic" type="string" required="false">
+                                <caption>Static label</caption>
+                                <description>The label text for the mark.</description>
+                            </property>
+                            <property key="labelDynamic" type="attribute" required="false">
+                                <caption>Dynamic label</caption>
+                                <description>Attribute for dynamic label</description>
+                                <attributeTypes>
+                                    <attributeType name="String" />
+                                </attributeTypes>
+                            </property>
+                            <property key="labelExpression" type="expression" required="false">
+                                <caption>Expression label</caption>
+                                <description>Expression for label text</description>
+                                <returnType type="String" />
+                            </property>
+                        </propertyGroup>
+                    </properties>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Label">
+                <systemProperty key="Label" />
+            </propertyGroup>
+            <propertyGroup caption="Editability">
+                <systemProperty key="Editability" />
+            </propertyGroup>
+            <propertyGroup caption="Visibility">
+                <systemProperty key="Visibility" />
+            </propertyGroup>
+        </propertyGroup>
+    </properties>
+</widget>
