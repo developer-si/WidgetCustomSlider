@@ -3,8 +3,10 @@
  * WARNING: All changes made to this file will be overwritten
  * @author Mendix Widgets Framework Team
  */
-import { DynamicValue, EditableValue } from "mendix";
+import { ActionValue, DynamicValue, EditableValue } from "mendix";
 import { Big } from "big.js";
+
+export type OrientationEnum = "horizontal" | "vertical";
 
 export type MinValueTypeEnum = "static" | "dynamic" | "expression";
 
@@ -26,6 +28,10 @@ export type SliderTooltipTypeEnum = "value" | "customText";
 
 export type SliderTooltipPositionEnum = "top" | "bottom";
 
+export type LowerValueTypeEnum = "static" | "dynamic" | "expression";
+
+export type UpperValueTypeEnum = "static" | "dynamic" | "expression";
+
 export type PositionTypeEnum = "static" | "dynamic" | "expression";
 
 export type LabelTypeEnum = "static" | "dynamic" | "expression";
@@ -39,6 +45,8 @@ export interface MarksType {
     labelStatic: string;
     labelDynamic?: EditableValue<string>;
     labelExpression?: DynamicValue<string>;
+    markColor: string;
+    markClass: string;
 }
 
 export interface MarksPreviewType {
@@ -50,12 +58,16 @@ export interface MarksPreviewType {
     labelStatic: string;
     labelDynamic: string;
     labelExpression: string;
+    markColor: string;
+    markClass: string;
 }
 
 export interface CustomSliderContainerProps {
     name: string;
     tabIndex?: number;
     id: string;
+    orientation: OrientationEnum;
+    rangeMode: boolean;
     minValueType: MinValueTypeEnum;
     minStaticValue: Big;
     minDynamicValue?: EditableValue<Big>;
@@ -87,13 +99,39 @@ export interface CustomSliderContainerProps {
     sliderTooltipTemplate?: DynamicValue<string>;
     sliderTooltipPosition: SliderTooltipPositionEnum;
     sliderTooltipAlwaysVisible: boolean;
+    lowerValueType: LowerValueTypeEnum;
+    lowerStaticValue: Big;
+    lowerDynamicValue?: EditableValue<Big>;
+    lowerExpressionValue?: DynamicValue<Big>;
+    upperValueType: UpperValueTypeEnum;
+    upperStaticValue: Big;
+    upperDynamicValue?: EditableValue<Big>;
+    upperExpressionValue?: DynamicValue<Big>;
     marks: MarksType[];
+    showTicks: boolean;
+    tickInterval: Big;
+    snapToTicks: boolean;
+    debounceMs: number;
+    snapToMarks: boolean;
+    trackColor: string;
+    trackBackgroundColor: string;
+    thumbColor: string;
+    markColorGlobal: string;
+    thumbSize: number;
+    trackThickness: number;
+    customClass: string;
+    onChange?: ActionValue;
+    onChangeEnd?: ActionValue;
+    ariaLabel: string;
+    ariaLabelledBy: string;
 }
 
 export interface CustomSliderPreviewProps {
     readOnly: boolean;
     renderMode: "design" | "xray" | "structure";
     translate: (text: string) => string;
+    orientation: OrientationEnum;
+    rangeMode: boolean;
     minValueType: MinValueTypeEnum;
     minStaticValue: number | null;
     minDynamicValue: string;
@@ -125,5 +163,29 @@ export interface CustomSliderPreviewProps {
     sliderTooltipTemplate: string;
     sliderTooltipPosition: SliderTooltipPositionEnum;
     sliderTooltipAlwaysVisible: boolean;
+    lowerValueType: LowerValueTypeEnum;
+    lowerStaticValue: number | null;
+    lowerDynamicValue: string;
+    lowerExpressionValue: string;
+    upperValueType: UpperValueTypeEnum;
+    upperStaticValue: number | null;
+    upperDynamicValue: string;
+    upperExpressionValue: string;
     marks: MarksPreviewType[];
+    showTicks: boolean;
+    tickInterval: number | null;
+    snapToTicks: boolean;
+    debounceMs: number | null;
+    snapToMarks: boolean;
+    trackColor: string;
+    trackBackgroundColor: string;
+    thumbColor: string;
+    markColorGlobal: string;
+    thumbSize: number | null;
+    trackThickness: number | null;
+    customClass: string;
+    onChange: {} | null;
+    onChangeEnd: {} | null;
+    ariaLabel: string;
+    ariaLabelledBy: string;
 }

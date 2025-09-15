@@ -100,168 +100,233 @@ export type PreviewProps =
     | SelectableProps
     | DatasourceProps
 
-export function getProperties(
-    _values: CustomSliderPreviewProps,
-    defaultProperties: Properties /* , target: Platform*/
-): Properties {
+const hideByType = (
+    keysToHide: Array<keyof CustomSliderPreviewProps>,
+    type: "static" | "dynamic" | "expression",
+    staticKey: keyof CustomSliderPreviewProps,
+    dynKey: keyof CustomSliderPreviewProps,
+    exprKey: keyof CustomSliderPreviewProps
+) => {
+    switch (type) {
+        case "static":
+            keysToHide.push(dynKey, exprKey);
+            break;
+        case "dynamic":
+            keysToHide.push(staticKey, exprKey);
+            break;
+        case "expression":
+            keysToHide.push(staticKey, dynKey);
+            break;
+    }
+};
 
+const num = (v: any, d = 0): number =>
+    typeof v === "number" && !Number.isNaN(v) && Number.isFinite(v) ? v : d;
+
+const isEmpty = (s?: string | null) => !s || s.trim().length === 0;
+
+export function getProperties(
+    values: CustomSliderPreviewProps,
+    defaultProperties: Properties
+): Properties {
     const keysToHide: Array<keyof CustomSliderPreviewProps> = [];
 
-    switch (_values.minValueType) {
-        case "static":
-            keysToHide.push("minDynamicValue", "minExpressionValue");
-            break;
-        case "dynamic":
-            keysToHide.push("minStaticValue", "minExpressionValue");
-            break;
-        case "expression":
-            keysToHide.push("minStaticValue", "minDynamicValue");
-            break;
+    if (!values.rangeMode) {
+        keysToHide.push(
+            "lowerValueType",
+            "lowerStaticValue",
+            "lowerDynamicValue",
+            "lowerExpressionValue",
+            "upperValueType",
+            "upperStaticValue",
+            "upperDynamicValue",
+            "upperExpressionValue"
+        );
     }
 
-    switch (_values.maxValueType) {
-        case "static":
-            keysToHide.push("maxDynamicValue", "maxExpressionValue");
-            break;
-        case "dynamic":
-            keysToHide.push("maxStaticValue", "maxExpressionValue");
-            break;
-        case "expression":
-            keysToHide.push("maxStaticValue", "maxDynamicValue");
-            break;
+    hideByType(keysToHide, values.minValueType, "minStaticValue", "minDynamicValue", "minExpressionValue");
+    hideByType(keysToHide, values.maxValueType, "maxStaticValue", "maxDynamicValue", "maxExpressionValue");
+    hideByType(keysToHide, values.stepValueType, "stepStaticValue", "stepDynamicValue", "stepExpressionValue");
+    hideByType(keysToHide, values.sliderValueType, "sliderStaticValue", "sliderDynamicValue", "sliderExpressionValue");
+
+    if (values.rangeMode) {
+        hideByType(keysToHide, values.lowerValueType, "lowerStaticValue", "lowerDynamicValue", "lowerExpressionValue");
+        hideByType(keysToHide, values.upperValueType, "upperStaticValue", "upperDynamicValue", "upperExpressionValue");
     }
 
-    switch (_values.stepValueType) {
-        case "static":
-            keysToHide.push("stepDynamicValue", "stepExpressionValue");
-            break;
-        case "dynamic":
-            keysToHide.push("stepStaticValue", "stepExpressionValue");
-            break;
-        case "expression":
-            keysToHide.push("stepStaticValue", "stepDynamicValue");
-            break;
-    }
-
-    switch (_values.sliderValueType) {
-        case "static":
-            keysToHide.push("sliderDynamicValue", "sliderExpressionValue");
-            break;
-        case "dynamic":
-            keysToHide.push("sliderStaticValue", "sliderExpressionValue");
-            break;
-        case "expression":
-            keysToHide.push("sliderStaticValue", "sliderDynamicValue");
-            break;
-    }
-
-    if (_values.sliderShowTooltip === false) {
+    if (!values.sliderShowTooltip) {
         keysToHide.push("sliderTooltipType", "sliderTooltipTemplate", "sliderTooltipPosition", "sliderTooltipAlwaysVisible");
-    }
-
-    if (_values.minShowTooltip === false) {
-        keysToHide.push("minTooltipType", "minTooltipTemplate", "minTooltipPosition", "minTooltipAlwaysVisible");
-    }
-
-    if (_values.maxShowTooltip === false) {
-        keysToHide.push("maxTooltipType", "maxTooltipTemplate", "maxTooltipPosition", "maxTooltipAlwaysVisible");
-    }
-
-    if (_values.sliderTooltipType !== "customText") {
+    } else if (values.sliderTooltipType !== "customText") {
         keysToHide.push("sliderTooltipTemplate");
     }
 
-    if (_values.minTooltipType !== "customText") {
+    if (!values.minShowTooltip) {
+        keysToHide.push("minTooltipType", "minTooltipTemplate", "minTooltipPosition", "minTooltipAlwaysVisible");
+    } else if (values.minTooltipType !== "customText") {
         keysToHide.push("minTooltipTemplate");
     }
 
-    if (_values.maxTooltipType !== "customText") {
+    if (!values.maxShowTooltip) {
+        keysToHide.push("maxTooltipType", "maxTooltipTemplate", "maxTooltipPosition", "maxTooltipAlwaysVisible");
+    } else if (values.maxTooltipType !== "customText") {
         keysToHide.push("maxTooltipTemplate");
     }
 
-    // if (Array.isArray(_values.marks)) {
-    //     const markProp = defaultProperties.find(p => p.caption === "Marks");
-    //     const marksGroup = markProp?.properties?.find(p => p.key === "marks");
-
-    //     _values.marks.forEach((mark, index) => {
-    //         const keysToHide: (keyof MarksPreviewType)[] = [];
-
-    //         switch (mark.positionType) {
-    //             case "static":
-    //                 keysToHide.push("positionDynamic", "positionExpression");
-    //                 break;
-    //             case "dynamic":
-    //                 keysToHide.push("positionStatic", "positionExpression");
-    //                 break;
-    //             case "expression":
-    //                 keysToHide.push("positionStatic", "positionDynamic");
-    //                 break;
-    //         }
-
-    //         switch (mark.labelType) {
-    //             case "static":
-    //                 keysToHide.push("labelDynamic", "labelExpression");
-    //                 break;
-    //             case "dynamic":
-    //                 keysToHide.push("labelStatic", "labelExpression");
-    //                 break;
-    //             case "expression":
-    //                 keysToHide.push("labelStatic", "labelDynamic");
-    //                 break;
-    //         }
-
-    //         const markObject = marksGroup?.objects?.[index];
-    //         if (markObject?.properties) {
-    //             markObject.properties.forEach(group => {
-    //                 if (group.properties) {
-    //                     const fakeGroup: PropertyGroup = {
-    //                         caption: group.caption,
-    //                         properties: group.properties
-    //                     };
-    //                     hidePropertiesIn([fakeGroup], mark, keysToHide);
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
-
-
-    hidePropertiesIn(defaultProperties, _values, keysToHide);
-    // Do the values manipulation here to control the visibility of properties in Studio and Studio Pro conditionally.
-    /* Example
-    if (values.myProperty === "custom") {
-        delete defaultProperties.properties.myOtherProperty;
+    if (!values.showTicks) {
+        keysToHide.push("tickInterval", "snapToTicks");
     }
-    */
+
+    try {
+        if (Array.isArray(values.marks) && values.marks.length) {
+            const markGroup = defaultProperties
+                .find(pg => pg.caption === "Marks")
+                ?.properties?.find(p => p.key === "marks");
+
+            values.marks.forEach((mark: any, index: number) => {
+                const localHide: string[] = [];
+                switch (mark.positionType) {
+                    case "static":
+                        localHide.push("positionDynamic", "positionExpression");
+                        break;
+                    case "dynamic":
+                        localHide.push("positionStatic", "positionExpression");
+                        break;
+                    case "expression":
+                        localHide.push("positionStatic", "positionDynamic");
+                        break;
+                }
+                switch (mark.labelType) {
+                    case "static":
+                        localHide.push("labelDynamic", "labelExpression");
+                        break;
+                    case "dynamic":
+                        localHide.push("labelStatic", "labelExpression");
+                        break;
+                    case "expression":
+                        localHide.push("labelStatic", "labelDynamic");
+                        break;
+                }
+
+                const markObj = markGroup?.objects?.[index];
+                if (markObj?.properties) {
+                    const groups: PropertyGroup[] = markObj.properties.map(g => ({
+                        caption: g.caption,
+                        properties: g.properties
+                    }));
+                    hidePropertiesIn(groups, mark, localHide as any);
+                }
+            });
+        }
+    } catch {
+    }
+
+    hidePropertiesIn(defaultProperties, values, keysToHide);
     return defaultProperties;
 }
 
-export function check(_values: CustomSliderPreviewProps): Problem[] {
+export function check(values: CustomSliderPreviewProps): Problem[] {
     const errors: Problem[] = [];
 
-    if (_values.sliderTooltipType === "customText" && !_values.sliderTooltipTemplate?.trim()) {
+    const min =
+        values.minValueType === "static" ? num(values.minStaticValue, 0) : undefined;
+    const max =
+        values.maxValueType === "static" ? num(values.maxStaticValue, 100) : undefined;
+    const step =
+        values.stepValueType === "static" ? num(values.stepStaticValue, 1) : undefined;
+
+    if (values.sliderShowTooltip && values.sliderTooltipType === "customText" && isEmpty(values.sliderTooltipTemplate)) {
         errors.push({
             property: "sliderTooltipTemplate",
             severity: "error",
             message: "The main slider tooltip is in custom mode, but no text has been provided."
         });
     }
-
-    if (_values.minTooltipType === "customText" && !_values.minTooltipTemplate?.trim()) {
+    if (values.minShowTooltip && values.minTooltipType === "customText" && isEmpty(values.minTooltipTemplate)) {
         errors.push({
             property: "minTooltipTemplate",
             severity: "error",
             message: "The minimum tooltip is in custom mode, but no text has been provided."
         });
     }
-
-    if (_values.maxTooltipType === "customText" && !_values.maxTooltipTemplate?.trim()) {
+    if (values.maxShowTooltip && values.maxTooltipType === "customText" && isEmpty(values.maxTooltipTemplate)) {
         errors.push({
             property: "maxTooltipTemplate",
             severity: "error",
             message: "The maximum tooltip is in custom mode, but no text has been provided."
         });
     }
+
+    if (min !== undefined && max !== undefined) {
+        if (max <= min) {
+            errors.push({
+                property: "maxStaticValue",
+                severity: "error",
+                message: "Maximum value must be greater than minimum value."
+            });
+        }
+        if (step !== undefined) {
+            if (step <= 0) {
+                errors.push({
+                    property: "stepStaticValue",
+                    severity: "error",
+                    message: "Step size must be greater than 0."
+                });
+            } else {
+                const range = max - min;
+                if (range > 0) {
+                    const div = range / step;
+                    if (Math.abs(div - Math.round(div)) > 1e-9) {
+                        errors.push({
+                            property: "stepStaticValue",
+                            severity: "warning",
+                            message: "The range (max - min) is not evenly divisible by the step value."
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    if (values.rangeMode && min !== undefined && max !== undefined) {
+        const lower =
+            values.lowerValueType === "static" ? num(values.lowerStaticValue, min) : undefined;
+        const upper =
+            values.upperValueType === "static" ? num(values.upperStaticValue, max) : undefined;
+
+        if (lower !== undefined && (lower < min || lower > max)) {
+            errors.push({
+                property: "lowerStaticValue",
+                severity: "error",
+                message: "Lower value must be within [min, max]."
+            });
+        }
+        if (upper !== undefined && (upper < min || upper > max)) {
+            errors.push({
+                property: "upperStaticValue",
+                severity: "error",
+                message: "Upper value must be within [min, max]."
+            });
+        }
+        if (lower !== undefined && upper !== undefined && lower > upper) {
+            errors.push({
+                property: "upperStaticValue",
+                severity: "error",
+                message: "Upper value must be greater than or equal to lower value."
+            });
+        }
+    }
+
+    if (values.showTicks) {
+        const ti = num(values.tickInterval, 0);
+        if (values.snapToTicks && ti <= 0) {
+            errors.push({
+                property: "tickInterval",
+                severity: "warning",
+                message: "Snap to ticks is enabled but Tick interval is 0. Set a positive Tick interval."
+            });
+        }
+    }
+
     return errors;
 }
 
