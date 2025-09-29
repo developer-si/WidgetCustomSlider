@@ -49,8 +49,14 @@ function getNumberFromValue(
 
 const clamp = (n: number, min: number, max: number): number => (max < min ? n : Math.min(max, Math.max(min, n)));
 
-const roundToStep = (n: number, step: number, min: number): number =>
-    step <= 0 ? n : min + Math.round((n - min) / step) * step;
+const roundToStep = (n: number, step: number, min: number): number => {
+    if (step <= 0) {
+        return n;
+    }
+    const rel = new Big(n).minus(min).div(step);
+    const rounded = rel.round(0, Big.roundHalfUp);
+    return Number(rounded.times(step).plus(min).toString());
+};
 
 const nearestOf = (n: number, arr: number[]): number =>
     arr.reduce((b, x) => (Math.abs(x - n) < Math.abs(b - n) ? x : b), arr[0] ?? n);
