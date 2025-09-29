@@ -1,5 +1,14 @@
 import { CustomSliderContainerProps } from "../typings/CustomSliderProps";
-import { createElement, useState, useMemo, useRef, useEffect, useCallback, type CSSProperties } from "react";
+import {
+    createElement,
+    useState,
+    useMemo,
+    useRef,
+    useEffect,
+    useCallback,
+    type CSSProperties,
+    type ReactElement
+} from "react";
 import Big from "big.js";
 import "./ui/CustomSlider.css";
 
@@ -38,12 +47,15 @@ function getNumberFromValue(
     }
 }
 
-const clamp = (n: number, min: number, max: number) => (max < min ? n : Math.min(max, Math.max(min, n)));
-const roundToStep = (n: number, step: number, min: number) =>
+const clamp = (n: number, min: number, max: number): number => (max < min ? n : Math.min(max, Math.max(min, n)));
+
+const roundToStep = (n: number, step: number, min: number): number =>
     step <= 0 ? n : min + Math.round((n - min) / step) * step;
-const nearestOf = (n: number, arr: number[]) =>
+
+const nearestOf = (n: number, arr: number[]): number =>
     arr.reduce((b, x) => (Math.abs(x - n) < Math.abs(b - n) ? x : b), arr[0] ?? n);
-const clampPercentage = (p: number) => Math.max(0, Math.min(100, p));
+
+const clampPercentage = (p: number): number => Math.max(0, Math.min(100, p));
 
 export function posStyle(frac: number, anchor: "center" | "left" | "right" | "auto" = "auto"): CSSProperties {
     const f = Math.max(0, Math.min(1, frac));
@@ -67,7 +79,7 @@ export function posStyle(frac: number, anchor: "center" | "left" | "right" | "au
     } as CSSProperties;
 }
 
-export function CustomSlider(props: CustomSliderContainerProps) {
+export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
     const {
         orientation,
         rangeMode,
@@ -188,7 +200,7 @@ export function CustomSlider(props: CustomSliderContainerProps) {
     }, [lowerInit, upperInit]);
 
     const debounceRef = useRef<number | undefined>(undefined);
-    const triggerOnChange = useCallback(() => {
+    const triggerOnChange = useCallback((): void => {
         if (!onChange?.canExecute) {
             return;
         }
@@ -199,7 +211,7 @@ export function CustomSlider(props: CustomSliderContainerProps) {
             onChange.execute();
         }
     }, [onChange, debounceMs]);
-    const triggerOnEnd = useCallback(() => {
+    const triggerOnEnd = useCallback((): void => {
         if (onChangeEnd?.canExecute) {
             onChangeEnd.execute();
         }
@@ -226,7 +238,7 @@ export function CustomSlider(props: CustomSliderContainerProps) {
     }, [marks, min, max]);
 
     const nearestSnap = useCallback(
-        (n: number) => {
+        (n: number): number => {
             let t = roundToStep(n, step, min);
 
             if (snapToMarks && markPositions.length) {
@@ -239,7 +251,7 @@ export function CustomSlider(props: CustomSliderContainerProps) {
     );
 
     const commitSingle = useCallback(
-        (v: number) => {
+        (v: number): void => {
             if (sliderValueType === "dynamic" && props.sliderDynamicValue?.setValue) {
                 props.sliderDynamicValue.setValue(new Big(v));
             }
@@ -248,7 +260,7 @@ export function CustomSlider(props: CustomSliderContainerProps) {
     );
 
     const onSingle = useCallback(
-        (e: any) => {
+        (e: any): void => {
             const v = nearestSnap(clamp(Number(e.target.value), min, max));
             setSingle(v);
             commitSingle(v);
@@ -258,7 +270,7 @@ export function CustomSlider(props: CustomSliderContainerProps) {
     );
 
     const getTooltipText = useCallback(
-        (type: "value" | "customText", tpl?: { value?: string }, v?: number) => {
+        (type: "value" | "customText", tpl?: { value?: string }, v?: number): string => {
             if (type === "customText") {
                 return tpl?.value ?? "";
             }
@@ -270,11 +282,11 @@ export function CustomSlider(props: CustomSliderContainerProps) {
         [rangeMode, lower, upper, single]
     );
 
-    const percent = useCallback((v: number) => (max === min ? 0 : ((v - min) / (max - min)) * 100), [min, max]);
+    const percent = useCallback((v: number): number => (max === min ? 0 : ((v - min) / (max - min)) * 100), [min, max]);
     const centerPosClass = sliderTooltipPosition === "bottom" ? "bottom" : "top";
 
     const fracOf = useCallback(
-        (v: number) => (max === min ? 0 : Math.max(0, Math.min(1, (v - min) / (max - min)))),
+        (v: number): number => (max === min ? 0 : Math.max(0, Math.min(1, (v - min) / (max - min)))),
         [min, max]
     );
 
