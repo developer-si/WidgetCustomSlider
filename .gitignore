@@ -2,7 +2,7 @@
 .DS_Store
 .idea
 .vscode
-dist
+dist/tmp
 node_modules
 .env
 *.log
