@@ -1,4 +1,4 @@
-import { CustomSliderPreviewProps/* , MarksPreviewType */ } from "../typings/CustomSliderProps";
+import { CustomSliderPreviewProps /* , MarksPreviewType */ } from "../typings/CustomSliderProps";
 import { hidePropertiesIn } from "@mendix/pluggable-widgets-tools";
 
 export type Platform = "web" | "desktop";
@@ -98,7 +98,7 @@ export type PreviewProps =
     | TextProps
     | DropZoneProps
     | SelectableProps
-    | DatasourceProps
+    | DatasourceProps;
 
 const hideByType = (
     keysToHide: Array<keyof CustomSliderPreviewProps>,
@@ -120,15 +120,11 @@ const hideByType = (
     }
 };
 
-const num = (v: any, d = 0): number =>
-    typeof v === "number" && !Number.isNaN(v) && Number.isFinite(v) ? v : d;
+const num = (v: any, d = 0): number => (typeof v === "number" && !Number.isNaN(v) && Number.isFinite(v) ? v : d);
 
 const isEmpty = (s?: string | null) => !s || s.trim().length === 0;
 
-export function getProperties(
-    values: CustomSliderPreviewProps,
-    defaultProperties: Properties
-): Properties {
+export function getProperties(values: CustomSliderPreviewProps, defaultProperties: Properties): Properties {
     const keysToHide: Array<keyof CustomSliderPreviewProps> = [];
 
     if (!values.rangeMode) {
@@ -155,7 +151,12 @@ export function getProperties(
     }
 
     if (!values.sliderShowTooltip) {
-        keysToHide.push("sliderTooltipType", "sliderTooltipTemplate", "sliderTooltipPosition", "sliderTooltipAlwaysVisible");
+        keysToHide.push(
+            "sliderTooltipType",
+            "sliderTooltipTemplate",
+            "sliderTooltipPosition",
+            "sliderTooltipAlwaysVisible"
+        );
     } else if (values.sliderTooltipType !== "customText") {
         keysToHide.push("sliderTooltipTemplate");
     }
@@ -214,6 +215,7 @@ export function getProperties(
             });
         }
     } catch {
+        /* Comment for lint:fix */
     }
 
     hidePropertiesIn(defaultProperties, values, keysToHide);
@@ -223,14 +225,15 @@ export function getProperties(
 export function check(values: CustomSliderPreviewProps): Problem[] {
     const errors: Problem[] = [];
 
-    const min =
-        values.minValueType === "static" ? num(values.minStaticValue, 0) : undefined;
-    const max =
-        values.maxValueType === "static" ? num(values.maxStaticValue, 100) : undefined;
-    const step =
-        values.stepValueType === "static" ? num(values.stepStaticValue, 1) : undefined;
+    const min = values.minValueType === "static" ? num(values.minStaticValue, 0) : undefined;
+    const max = values.maxValueType === "static" ? num(values.maxStaticValue, 100) : undefined;
+    const step = values.stepValueType === "static" ? num(values.stepStaticValue, 1) : undefined;
 
-    if (values.sliderShowTooltip && values.sliderTooltipType === "customText" && isEmpty(values.sliderTooltipTemplate)) {
+    if (
+        values.sliderShowTooltip &&
+        values.sliderTooltipType === "customText" &&
+        isEmpty(values.sliderTooltipTemplate)
+    ) {
         errors.push({
             property: "sliderTooltipTemplate",
             severity: "error",
@@ -284,10 +287,8 @@ export function check(values: CustomSliderPreviewProps): Problem[] {
     }
 
     if (values.rangeMode && min !== undefined && max !== undefined) {
-        const lower =
-            values.lowerValueType === "static" ? num(values.lowerStaticValue, min) : undefined;
-        const upper =
-            values.upperValueType === "static" ? num(values.upperStaticValue, max) : undefined;
+        const lower = values.lowerValueType === "static" ? num(values.lowerStaticValue, min) : undefined;
+        const upper = values.upperValueType === "static" ? num(values.upperStaticValue, max) : undefined;
 
         if (lower !== undefined && (lower < min || lower > max)) {
             errors.push({
@@ -314,8 +315,6 @@ export function check(values: CustomSliderPreviewProps): Problem[] {
 
     return errors;
 }
-
-
 
 // export function getPreview(values: CustomSliderPreviewProps, isDarkMode: boolean, version: number[]): PreviewProps {
 //     // Customize your pluggable widget appearance for Studio Pro.
