@@ -122,7 +122,7 @@ function hideByType(
 
 const num = (v: any, d = 0): number => (typeof v === "number" && !Number.isNaN(v) && Number.isFinite(v) ? v : d);
 
-const isEmpty = (s?: string | null) => !s || s.trim().length === 0;
+const isEmpty = (s?: string | null): boolean => !s || s.trim().length === 0;
 
 export function getProperties(values: CustomSliderPreviewProps, defaultProperties: Properties): Properties {
     const keysToHide: Array<keyof CustomSliderPreviewProps> = [];
