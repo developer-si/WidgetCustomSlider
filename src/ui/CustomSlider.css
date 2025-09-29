@@ -241,7 +241,7 @@
 }
 
 .custom-slider-container.horizontal .slider-tooltip.central {
-  transform: translate(-45%, calc(-45% + var(--track-thickness) / 2 + var(--label-gap)));
+  transform: translate(-45%, calc(-115% + var(--track-thickness) / 2 + var(--label-gap)));
 }
 
 .custom-slider-container .slider-tooltip.top.edge-left {
@@ -251,10 +251,10 @@
   transform: translate(-100%, calc(-45% - var(--track-thickness)/2 - var(--label-gap)));
 }
 .custom-slider-container .slider-tooltip.bottom.edge-left {
-  transform: translate(0,   calc( -45% + var(--track-thickness)/2 + var(--label-gap)));
+  transform: translate(0, calc(75% + var(--track-thickness) / 2 + var(--label-gap)));
 }
 .custom-slider-container .slider-tooltip.bottom.edge-right {
-  transform: translate(-100%, calc( -45% + var(--track-thickness)/2 + var(--label-gap)));
+  transform: translate(0%, calc(75% + var(--track-thickness) / 2 + var(--label-gap)));
 }
 
 .range .range-tooltip.lower.top {

@@ -318,21 +318,6 @@
                 </property>
             </propertyGroup>
 
-            <propertyGroup caption="Ticks">
-                <property key="showTicks" type="boolean" defaultValue="false">
-                    <caption>Show ticks</caption>
-                    <description />
-                </property>
-                <property key="tickInterval" type="decimal" defaultValue="0">
-                    <caption>Tick interval</caption>
-                    <description>0 means auto/none. Use a positive number to show ticks every N units.</description>
-                </property>
-                <property key="snapToTicks" type="boolean" defaultValue="false">
-                    <caption>Snap to ticks</caption>
-                    <description />
-                </property>
-            </propertyGroup>
-
             <propertyGroup caption="Behavior">
                 <property key="debounceMs" type="integer" defaultValue="0">
                     <caption>Debounce onChange (ms)</caption><description />
@@ -355,10 +340,10 @@
                 <property key="markColorGlobal" type="string" defaultValue="#3EA2F7">
                     <caption>Marks color (default)</caption><description />
                 </property>
-                <property key="thumbSize" type="integer" defaultValue="24">
+                <property key="thumbSize" type="integer" defaultValue="12">
                     <caption>Thumb size (px)</caption><description />
                 </property>
-                <property key="trackThickness" type="integer" defaultValue="8">
+                <property key="trackThickness" type="integer" defaultValue="12">
                     <caption>Track thickness (px)</caption><description />
                 </property>
                 <property key="customClass" type="string" required="false">

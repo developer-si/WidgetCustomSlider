@@ -172,10 +172,6 @@ export function getProperties(
         keysToHide.push("maxTooltipTemplate");
     }
 
-    if (!values.showTicks) {
-        keysToHide.push("tickInterval", "snapToTicks");
-    }
-
     try {
         if (Array.isArray(values.marks) && values.marks.length) {
             const markGroup = defaultProperties
@@ -312,17 +308,6 @@ export function check(values: CustomSliderPreviewProps): Problem[] {
                 property: "upperStaticValue",
                 severity: "error",
                 message: "Upper value must be greater than or equal to lower value."
-            });
-        }
-    }
-
-    if (values.showTicks) {
-        const ti = num(values.tickInterval, 0);
-        if (values.snapToTicks && ti <= 0) {
-            errors.push({
-                property: "tickInterval",
-                severity: "warning",
-                message: "Snap to ticks is enabled but Tick interval is 0. Set a positive Tick interval."
             });
         }
     }

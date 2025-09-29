@@ -108,9 +108,6 @@ export interface CustomSliderContainerProps {
     upperDynamicValue?: EditableValue<Big>;
     upperExpressionValue?: DynamicValue<Big>;
     marks: MarksType[];
-    showTicks: boolean;
-    tickInterval: Big;
-    snapToTicks: boolean;
     debounceMs: number;
     snapToMarks: boolean;
     trackColor: string;
@@ -172,9 +169,6 @@ export interface CustomSliderPreviewProps {
     upperDynamicValue: string;
     upperExpressionValue: string;
     marks: MarksPreviewType[];
-    showTicks: boolean;
-    tickInterval: number | null;
-    snapToTicks: boolean;
     debounceMs: number | null;
     snapToMarks: boolean;
     trackColor: string;

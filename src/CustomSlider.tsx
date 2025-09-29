@@ -32,12 +32,11 @@ const clamp = (n: number, min: number, max: number) => (max < min ? n : Math.min
 const roundToStep = (n: number, step: number, min: number) => (step <= 0 ? n : (min + Math.round((n - min) / step) * step));
 const nearestOf = (n: number, arr: number[]) => arr.reduce((b, x) => Math.abs(x - n) < Math.abs(b - n) ? x : b, arr[0] ?? n);
 const clamp01 = (p: number) => Math.max(0, Math.min(100, p));
-const edgeClass = (pct: number) => (pct < 6 ? "edge-left" : pct > 94 ? "edge-right" : "");
 
 export function posStyle(frac: number): React.CSSProperties {
   const f = Math.max(0, Math.min(1, frac));
-  if (f <= 0) return { left: 0 };
-  if (f >= 1) return { right: 0 };
+  if (f <= 0) return { left: 5 };
+  if (f >= 1) return { right: -10 };
   return {
     left: `calc((100% - var(--thumb-total, var(--thumb-size))) * ${f} + (var(--thumb-total, var(--thumb-size)) / 2))`
   } as React.CSSProperties;
@@ -55,8 +54,7 @@ export function CustomSlider(props: CustomSliderContainerProps) {
         upperValueType, upperStaticValue, upperDynamicValue, upperExpressionValue,
         minShowTooltip, minTooltipType, minTooltipTemplate, minTooltipPosition,
         maxShowTooltip, maxTooltipType, maxTooltipTemplate, maxTooltipPosition,
-        marks,
-        showTicks, tickInterval, snapToTicks, snapToMarks, debounceMs,
+        marks, snapToMarks, debounceMs,
         trackColor, trackBackgroundColor, thumbColor, thumbSize, trackThickness, customClass,
         onChange, onChangeEnd,
         ariaLabel, ariaLabelledBy
@@ -65,7 +63,6 @@ export function CustomSlider(props: CustomSliderContainerProps) {
     const min = useMemo(() => getNumberFromValue(minValueType, minStaticValue, minDynamicValue, minExpressionValue, 0), [minValueType, minStaticValue, minDynamicValue, minExpressionValue]);
     const max = useMemo(() => getNumberFromValue(maxValueType, maxStaticValue, maxDynamicValue, maxExpressionValue, 100), [maxValueType, maxStaticValue, maxDynamicValue, maxExpressionValue]);
     const step = useMemo(() => Math.max(0, getNumberFromValue(stepValueType, stepStaticValue, stepDynamicValue, stepExpressionValue, 1)), [stepValueType, stepStaticValue, stepDynamicValue, stepExpressionValue]);
-    const tickInt = useMemo(() => toNum(tickInterval, 0), [tickInterval]);
 
     const singleInit = useMemo(() => clamp(getNumberFromValue(sliderValueType, sliderStaticValue, sliderDynamicValue, sliderExpressionValue, min), min, max), [sliderValueType, sliderStaticValue, sliderDynamicValue, sliderExpressionValue, min, max]);
     const lowerInit = useMemo(() => clamp(getNumberFromValue(lowerValueType ?? "static", lowerStaticValue, lowerDynamicValue, lowerExpressionValue, min), min, max), [lowerValueType, lowerStaticValue, lowerDynamicValue, lowerExpressionValue, min, max]);
@@ -103,17 +100,13 @@ export function CustomSlider(props: CustomSliderContainerProps) {
 
     const nearestSnap = useCallback((n: number) => {
         let t = roundToStep(n, step, min);
-        if (showTicks && snapToTicks && tickInt > 0) {
-            const ticks: number[] = [];
-            for (let x = min; x <= max + 1e-9; x += tickInt) ticks.push(roundToStep(x, step || tickInt, min));
-            t = nearestOf(t, ticks);
-        }
+        
         if (snapToMarks && markPositions.length) {
             const m = nearestOf(t, markPositions);
             t = Math.abs(m - n) < Math.abs(t - n) ? m : t;
         }
         return clamp(t, min, max);
-    }, [step, min, max, showTicks, snapToTicks, tickInt, snapToMarks, markPositions]);
+    }, [step, min, max, snapToMarks, markPositions]);
 
     const commitSingle = useCallback((v: number) => { if (sliderValueType === "dynamic" && props.sliderDynamicValue?.setValue) props.sliderDynamicValue.setValue(new Big(v)); }, [sliderValueType, props.sliderDynamicValue]);
 
@@ -126,8 +119,6 @@ export function CustomSlider(props: CustomSliderContainerProps) {
     }, [rangeMode, lower, upper, single]);
 
     const percent = useCallback((v: number) => (max === min ? 0 : ((v - min) / (max - min)) * 100), [min, max]);
-    const pctMin = clamp01(percent(min)), pctMax = clamp01(percent(max));
-    const pctSingle = clamp01(percent(single));
     const centerPosClass = sliderTooltipPosition === "bottom" ? "bottom" : "top";
 
     const fracOf = useCallback((v: number) => (max === min ? 0 : Math.max(0, Math.min(1, (v - min) / (max - min)))), [min, max]);
@@ -147,13 +138,6 @@ export function CustomSlider(props: CustomSliderContainerProps) {
         "--thumb-size": (thumbSize ?? 24) + "px",
         "--track-thickness": (trackThickness ?? 8) + "px"
     };
-
-    const ticks = useMemo(() => {
-        if (!showTicks || tickInt <= 0 || max <= min) return [];
-        const out: number[] = [];
-        for (let x = min; x <= max + 1e-9; x += tickInt) out.push(clamp(x, min, max));
-        return out;
-    }, [showTicks, tickInt, min, max]);
 
     return (
         <div className={rootClass} style={cssVars} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}>
@@ -201,26 +185,21 @@ export function CustomSlider(props: CustomSliderContainerProps) {
                         );
                     })}
 
-                    {ticks.map((t, i) => {
-                        const frac = clamp01(percent(t)) / 100;
-                        return <div key={`tick-${i}`} className="slider-tick" style={posStyle(frac)} />;
-                    })}
-
                     {minShowTooltip && (
-                        <div className={`slider-tooltip visible ${minTooltipPosition === "bottom" ? "bottom" : "top"} ${edgeClass(pctMin)}`}
+                        <div className={`slider-tooltip visible ${minTooltipPosition === "bottom" ? "bottom" : "top"} edge-left`}
                             style={posStyle(0)}>
                             {getTooltipText(minTooltipType as any, minTooltipTemplate, min)}
                         </div>
                     )}
                     {maxShowTooltip && (
-                        <div className={`slider-tooltip visible ${maxTooltipPosition === "bottom" ? "bottom" : "top"} ${edgeClass(pctMax)}`}
+                        <div className={`slider-tooltip visible ${maxTooltipPosition === "bottom" ? "bottom" : "top"} edge-right`}
                             style={posStyle(1)}>
                             {getTooltipText(maxTooltipType as any, maxTooltipTemplate, max)}
                         </div>
                     )}
 
                     {!rangeMode && sliderShowTooltip && (
-                        <div className={`slider-tooltip central ${sliderTooltipAlwaysVisible ? "visible" : ""} ${centerPosClass} ${edgeClass(pctSingle)}`}
+                        <div className={`slider-tooltip central ${sliderTooltipAlwaysVisible ? "visible" : ""} ${centerPosClass}`}
                             style={posStyle(fSingle)}>
                             {getTooltipText(sliderTooltipType as any, sliderTooltipTemplate, single)}
                         </div>
