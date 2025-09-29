@@ -100,13 +100,13 @@ export type PreviewProps =
     | SelectableProps
     | DatasourceProps;
 
-const hideByType = (
+function hideByType(
     keysToHide: Array<keyof CustomSliderPreviewProps>,
     type: "static" | "dynamic" | "expression",
     staticKey: keyof CustomSliderPreviewProps,
     dynKey: keyof CustomSliderPreviewProps,
     exprKey: keyof CustomSliderPreviewProps
-) => {
+): void {
     switch (type) {
         case "static":
             keysToHide.push(dynKey, exprKey);
@@ -118,7 +118,7 @@ const hideByType = (
             keysToHide.push(staticKey, dynKey);
             break;
     }
-};
+}
 
 const num = (v: any, d = 0): number => (typeof v === "number" && !Number.isNaN(v) && Number.isFinite(v) ? v : d);
 

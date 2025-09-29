@@ -1,13 +1,5 @@
 import { CustomSliderContainerProps } from "../typings/CustomSliderProps";
-import {
-  createElement,
-  useState,
-  useMemo,
-  useRef,
-  useEffect,
-  useCallback,
-  type CSSProperties
-} from "react";
+import { createElement, useState, useMemo, useRef, useEffect, useCallback, type CSSProperties } from "react";
 import Big from "big.js";
 import "./ui/CustomSlider.css";
 
