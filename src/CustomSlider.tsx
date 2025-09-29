@@ -31,7 +31,7 @@ function getNumberFromValue(
 const clamp = (n: number, min: number, max: number) => (max < min ? n : Math.min(max, Math.max(min, n)));
 const roundToStep = (n: number, step: number, min: number) => (step <= 0 ? n : (min + Math.round((n - min) / step) * step));
 const nearestOf = (n: number, arr: number[]) => arr.reduce((b, x) => Math.abs(x - n) < Math.abs(b - n) ? x : b, arr[0] ?? n);
-const clamp01 = (p: number) => Math.max(0, Math.min(100, p));
+const clampPercentage = (p: number) => Math.max(0, Math.min(100, p));
 
 export function posStyle(
     frac: number,
@@ -167,7 +167,7 @@ export function CustomSlider(props: CustomSliderContainerProps) {
                 <div className="slider-overlays">
                     {marks?.map((m, i) => {
                         const p = clamp(getNumberFromValue((m as any).positionType, (m as any).positionStatic, (m as any).positionDynamic, (m as any).positionExpression, min), min, max);
-                        const frac = (clamp01(percent(p)) / 100);
+                        const frac = (clampPercentage(percent(p)) / 100);
                         const label =
                             (m as any).labelType === "static" ? ((m as any).labelStatic ?? "") :
                                 (m as any).labelType === "dynamic" ? ((m as any).labelDynamic?.value ?? "") :
