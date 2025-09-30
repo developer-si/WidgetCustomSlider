@@ -70,14 +70,14 @@ export function posStyle(frac: number, anchor: "center" | "left" | "right" | "au
         anchor === "center"
             ? "-50%"
             : anchor === "left"
-            ? "0%"
-            : anchor === "right"
-            ? "-100%"
-            : f === 0
-            ? "0%"
-            : f === 1
-            ? "-100%"
-            : "-50%";
+                ? "0%"
+                : anchor === "right"
+                    ? "-100%"
+                    : f === 0
+                        ? "0%"
+                        : f === 1
+                            ? "-100%"
+                            : "-50%";
 
     return {
         left,
@@ -376,8 +376,8 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
                             (m as any).labelType === "static"
                                 ? (m as any).labelStatic ?? ""
                                 : (m as any).labelType === "dynamic"
-                                ? (m as any).labelDynamic?.value ?? ""
-                                : (m as any).labelExpression?.value ?? "";
+                                    ? (m as any).labelDynamic?.value ?? ""
+                                    : (m as any).labelExpression?.value ?? "";
                         return (
                             <div key={i} className="slider-mark" style={posStyle(frac, "center")}>
                                 <div className="mark-dot" />
@@ -405,9 +405,8 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
 
                     {!rangeMode && sliderShowTooltip && (
                         <div
-                            className={`slider-tooltip central ${
-                                sliderTooltipAlwaysVisible ? "visible" : ""
-                            } ${centerPosClass}`}
+                            className={`slider-tooltip central ${sliderTooltipAlwaysVisible ? "visible" : ""
+                                } ${centerPosClass}`}
                             style={posStyle(fracOf(single), "center")}
                         >
                             {getTooltipText(sliderTooltipType as any, sliderTooltipTemplate, single)}

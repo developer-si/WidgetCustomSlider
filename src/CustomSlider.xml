@@ -65,23 +65,27 @@
                     </enumerationValues>
                 </property>
                 <property key="minTooltipTemplate" type="textTemplate" required="false">
-                    <caption>Tooltip</caption><description />
+                    <caption>Tooltip</caption>
+                    <description />
                 </property>
                 <property key="minTooltipPosition" type="enumeration" defaultValue="bottom">
-                    <caption>Tooltip position</caption><description />
+                    <caption>Tooltip position</caption>
+                    <description />
                     <enumerationValues>
                         <enumerationValue key="top">Top</enumerationValue>
                         <enumerationValue key="bottom">Bottom</enumerationValue>
                     </enumerationValues>
                 </property>
                 <property key="minTooltipAlwaysVisible" type="boolean" defaultValue="false">
-                    <caption>Tooltip always visible</caption><description />
+                    <caption>Tooltip always visible</caption>
+                    <description />
                 </property>
             </propertyGroup>
 
             <propertyGroup caption="Maximum">
                 <property key="maxValueType" type="enumeration" defaultValue="static">
-                    <caption>Maximum value type</caption><description />
+                    <caption>Maximum value type</caption>
+                    <description />
                     <enumerationValues>
                         <enumerationValue key="static">Static</enumerationValue>
                         <enumerationValue key="dynamic">Dynamic</enumerationValue>
@@ -89,10 +93,12 @@
                     </enumerationValues>
                 </property>
                 <property key="maxStaticValue" type="decimal" defaultValue="100">
-                    <caption>Maximum value</caption><description />
+                    <caption>Maximum value</caption>
+                    <description />
                 </property>
                 <property key="maxDynamicValue" type="attribute" required="false">
-                    <caption>Maximum value</caption><description />
+                    <caption>Maximum value</caption>
+                    <description />
                     <attributeTypes>
                         <attributeType name="Integer" />
                         <attributeType name="Long" />
@@ -100,11 +106,13 @@
                     </attributeTypes>
                 </property>
                 <property key="maxExpressionValue" type="expression" required="false">
-                    <caption>Maximum value</caption><description />
+                    <caption>Maximum value</caption>
+                    <description />
                     <returnType type="Decimal" />
                 </property>
                 <property key="maxShowTooltip" type="boolean" defaultValue="true">
-                    <caption>Show tooltip</caption><description />
+                    <caption>Show tooltip</caption>
+                    <description />
                 </property>
                 <property key="maxTooltipType" type="enumeration" defaultValue="value">
                     <caption>Tooltip type</caption>
@@ -115,23 +123,27 @@
                     </enumerationValues>
                 </property>
                 <property key="maxTooltipTemplate" type="textTemplate" required="false">
-                    <caption>Tooltip</caption><description />
+                    <caption>Tooltip</caption>
+                    <description />
                 </property>
                 <property key="maxTooltipPosition" type="enumeration" defaultValue="bottom">
-                    <caption>Tooltip position</caption><description />
+                    <caption>Tooltip position</caption>
+                    <description />
                     <enumerationValues>
                         <enumerationValue key="top">Top</enumerationValue>
                         <enumerationValue key="bottom">Bottom</enumerationValue>
                     </enumerationValues>
                 </property>
                 <property key="maxTooltipAlwaysVisible" type="boolean" defaultValue="false">
-                    <caption>Tooltip always visible</caption><description />
+                    <caption>Tooltip always visible</caption>
+                    <description />
                 </property>
             </propertyGroup>
 
             <propertyGroup caption="Step">
                 <property key="stepValueType" type="enumeration" defaultValue="static">
-                    <caption>Step size type</caption><description />
+                    <caption>Step size type</caption>
+                    <description />
                     <enumerationValues>
                         <enumerationValue key="static">Static</enumerationValue>
                         <enumerationValue key="dynamic">Dynamic</enumerationValue>
@@ -139,10 +151,12 @@
                     </enumerationValues>
                 </property>
                 <property key="stepStaticValue" type="decimal" defaultValue="1">
-                    <caption>Step size</caption><description />
+                    <caption>Step size</caption>
+                    <description />
                 </property>
                 <property key="stepDynamicValue" type="attribute" required="false">
-                    <caption>Step size</caption><description />
+                    <caption>Step size</caption>
+                    <description />
                     <attributeTypes>
                         <attributeType name="Integer" />
                         <attributeType name="Long" />
@@ -150,14 +164,16 @@
                     </attributeTypes>
                 </property>
                 <property key="stepExpressionValue" type="expression" required="false">
-                    <caption>Step size</caption><description />
+                    <caption>Step size</caption>
+                    <description />
                     <returnType type="Decimal" />
                 </property>
             </propertyGroup>
 
             <propertyGroup caption="Value">
                 <property key="sliderValueType" type="enumeration" defaultValue="static">
-                    <caption>Value type</caption><description />
+                    <caption>Value type</caption>
+                    <description />
                     <enumerationValues>
                         <enumerationValue key="static">Static</enumerationValue>
                         <enumerationValue key="dynamic">Dynamic</enumerationValue>
@@ -165,10 +181,12 @@
                     </enumerationValues>
                 </property>
                 <property key="sliderStaticValue" type="decimal" defaultValue="0">
-                    <caption>Value</caption><description />
+                    <caption>Value</caption>
+                    <description />
                 </property>
                 <property key="sliderDynamicValue" type="attribute" required="false">
-                    <caption>Value</caption><description />
+                    <caption>Value</caption>
+                    <description />
                     <attributeTypes>
                         <attributeType name="Integer" />
                         <attributeType name="Long" />
@@ -176,11 +194,13 @@
                     </attributeTypes>
                 </property>
                 <property key="sliderExpressionValue" type="expression" required="false">
-                    <caption>Value</caption><description />
+                    <caption>Value</caption>
+                    <description />
                     <returnType type="Decimal" />
                 </property>
                 <property key="sliderShowTooltip" type="boolean" defaultValue="true">
-                    <caption>Show tooltip</caption><description />
+                    <caption>Show tooltip</caption>
+                    <description />
                 </property>
                 <property key="sliderTooltipType" type="enumeration" defaultValue="value">
                     <caption>Tooltip type</caption>
@@ -191,23 +211,27 @@
                     </enumerationValues>
                 </property>
                 <property key="sliderTooltipTemplate" type="textTemplate" required="false">
-                    <caption>Tooltip</caption><description />
+                    <caption>Tooltip</caption>
+                    <description />
                 </property>
                 <property key="sliderTooltipPosition" type="enumeration" defaultValue="top">
-                    <caption>Tooltip position</caption><description />
+                    <caption>Tooltip position</caption>
+                    <description />
                     <enumerationValues>
                         <enumerationValue key="top">Top</enumerationValue>
                         <enumerationValue key="bottom">Bottom</enumerationValue>
                     </enumerationValues>
                 </property>
                 <property key="sliderTooltipAlwaysVisible" type="boolean" defaultValue="false">
-                    <caption>Tooltip always visible</caption><description />
+                    <caption>Tooltip always visible</caption>
+                    <description />
                 </property>
             </propertyGroup>
 
             <propertyGroup caption="Range (when enabled)">
                 <property key="lowerValueType" type="enumeration" defaultValue="static">
-                    <caption>Lower value type</caption><description />
+                    <caption>Lower value type</caption>
+                    <description />
                     <enumerationValues>
                         <enumerationValue key="static">Static</enumerationValue>
                         <enumerationValue key="dynamic">Dynamic</enumerationValue>
@@ -215,10 +239,12 @@
                     </enumerationValues>
                 </property>
                 <property key="lowerStaticValue" type="decimal" defaultValue="0">
-                    <caption>Lower value</caption><description />
+                    <caption>Lower value</caption>
+                    <description />
                 </property>
                 <property key="lowerDynamicValue" type="attribute" required="false">
-                    <caption>Lower value</caption><description />
+                    <caption>Lower value</caption>
+                    <description />
                     <attributeTypes>
                         <attributeType name="Integer" />
                         <attributeType name="Long" />
@@ -226,12 +252,14 @@
                     </attributeTypes>
                 </property>
                 <property key="lowerExpressionValue" type="expression" required="false">
-                    <caption>Lower value</caption><description />
+                    <caption>Lower value</caption>
+                    <description />
                     <returnType type="Decimal" />
                 </property>
 
                 <property key="upperValueType" type="enumeration" defaultValue="static">
-                    <caption>Upper value type</caption><description />
+                    <caption>Upper value type</caption>
+                    <description />
                     <enumerationValues>
                         <enumerationValue key="static">Static</enumerationValue>
                         <enumerationValue key="dynamic">Dynamic</enumerationValue>
@@ -239,10 +267,12 @@
                     </enumerationValues>
                 </property>
                 <property key="upperStaticValue" type="decimal" defaultValue="100">
-                    <caption>Upper value</caption><description />
+                    <caption>Upper value</caption>
+                    <description />
                 </property>
                 <property key="upperDynamicValue" type="attribute" required="false">
-                    <caption>Upper value</caption><description />
+                    <caption>Upper value</caption>
+                    <description />
                     <attributeTypes>
                         <attributeType name="Integer" />
                         <attributeType name="Long" />
@@ -250,7 +280,8 @@
                     </attributeTypes>
                 </property>
                 <property key="upperExpressionValue" type="expression" required="false">
-                    <caption>Upper value</caption><description />
+                    <caption>Upper value</caption>
+                    <description />
                     <returnType type="Decimal" />
                 </property>
             </propertyGroup>
@@ -262,7 +293,8 @@
                     <properties>
                         <propertyGroup caption="Mark">
                             <property key="positionType" type="enumeration" defaultValue="static">
-                                <caption>Position type</caption><description />
+                                <caption>Position type</caption>
+                                <description />
                                 <enumerationValues>
                                     <enumerationValue key="static">Static</enumerationValue>
                                     <enumerationValue key="dynamic">Dynamic</enumerationValue>
@@ -270,10 +302,12 @@
                                 </enumerationValues>
                             </property>
                             <property key="positionStatic" type="decimal" defaultValue="0">
-                                <caption>Static position</caption><description />
+                                <caption>Static position</caption>
+                                <description />
                             </property>
                             <property key="positionDynamic" type="attribute" required="false">
-                                <caption>Dynamic position</caption><description />
+                                <caption>Dynamic position</caption>
+                                <description />
                                 <attributeTypes>
                                     <attributeType name="Decimal" />
                                     <attributeType name="Integer" />
@@ -281,11 +315,13 @@
                                 </attributeTypes>
                             </property>
                             <property key="positionExpression" type="expression" required="false">
-                                <caption>Expression position</caption><description />
+                                <caption>Expression position</caption>
+                                <description />
                                 <returnType type="Decimal" />
                             </property>
                             <property key="labelType" type="enumeration" defaultValue="static">
-                                <caption>Label type</caption><description />
+                                <caption>Label type</caption>
+                                <description />
                                 <enumerationValues>
                                     <enumerationValue key="static">Static</enumerationValue>
                                     <enumerationValue key="dynamic">Dynamic</enumerationValue>
@@ -293,16 +329,19 @@
                                 </enumerationValues>
                             </property>
                             <property key="labelStatic" type="string" required="false">
-                                <caption>Static label</caption><description />
+                                <caption>Static label</caption>
+                                <description />
                             </property>
                             <property key="labelDynamic" type="attribute" required="false">
-                                <caption>Dynamic label</caption><description />
+                                <caption>Dynamic label</caption>
+                                <description />
                                 <attributeTypes>
                                     <attributeType name="String" />
                                 </attributeTypes>
                             </property>
                             <property key="labelExpression" type="expression" required="false">
-                                <caption>Expression label</caption><description />
+                                <caption>Expression label</caption>
+                                <description />
                                 <returnType type="String" />
                             </property>
                             <property key="markColor" type="string" required="false">
@@ -320,34 +359,43 @@
 
             <propertyGroup caption="Behavior">
                 <property key="debounceMs" type="integer" defaultValue="0">
-                    <caption>Debounce onChange (ms)</caption><description />
+                    <caption>Debounce onChange (ms)</caption>
+                    <description />
                 </property>
                 <property key="snapToMarks" type="boolean" defaultValue="false">
-                    <caption>Snap to marks</caption><description />
+                    <caption>Snap to marks</caption>
+                    <description />
                 </property>
             </propertyGroup>
 
             <propertyGroup caption="Styling">
                 <property key="trackColor" type="string" defaultValue="#3EA2F7">
-                    <caption>Track color</caption><description />
+                    <caption>Track color</caption>
+                    <description />
                 </property>
                 <property key="trackBackgroundColor" type="string" defaultValue="#cce5ff">
-                    <caption>Track background color</caption><description />
+                    <caption>Track background color</caption>
+                    <description />
                 </property>
                 <property key="thumbColor" type="string" defaultValue="#ffffff">
-                    <caption>Thumb color</caption><description />
+                    <caption>Thumb color</caption>
+                    <description />
                 </property>
                 <property key="markColorGlobal" type="string" defaultValue="#3EA2F7">
-                    <caption>Marks color (default)</caption><description />
+                    <caption>Marks color (default)</caption>
+                    <description />
                 </property>
                 <property key="thumbSize" type="integer" defaultValue="12">
-                    <caption>Thumb size (px)</caption><description />
+                    <caption>Thumb size (px)</caption>
+                    <description />
                 </property>
                 <property key="trackThickness" type="integer" defaultValue="12">
-                    <caption>Track thickness (px)</caption><description />
+                    <caption>Track thickness (px)</caption>
+                    <description />
                 </property>
                 <property key="customClass" type="string" required="false">
-                    <caption>Custom CSS class</caption><description />
+                    <caption>Custom CSS class</caption>
+                    <description />
                 </property>
             </propertyGroup>
 
@@ -364,10 +412,12 @@
 
             <propertyGroup caption="Accessibility">
                 <property key="ariaLabel" type="string" required="false">
-                    <caption>ARIA label</caption><description />
+                    <caption>ARIA label</caption>
+                    <description />
                 </property>
                 <property key="ariaLabelledBy" type="string" required="false">
-                    <caption>ARIA labelledby</caption><description />
+                    <caption>ARIA labelledby</caption>
+                    <description />
                 </property>
             </propertyGroup>
 
