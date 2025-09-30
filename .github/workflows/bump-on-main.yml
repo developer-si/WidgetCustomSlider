@@ -1,0 +1,12 @@
+name: Bump on main
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  call-reusable-bump:
+    uses: dvgroup/.github/workflows/bump-and-tag.yml@v1
+    permissions:
+      contents: write
+    with:
+      node_version: '18'
