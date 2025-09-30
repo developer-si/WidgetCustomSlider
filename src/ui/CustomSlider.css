@@ -165,3 +165,18 @@
     color: #333;
     white-space: nowrap;
 }
+
+.custom-slider-container.readonly .slider-input::-webkit-slider-thumb,
+.custom-slider-container.readonly .slider-input::-moz-range-thumb {
+  cursor: not-allowed;
+}
+
+.custom-slider-container.readonly .slider-overlays {
+  pointer-events: none;
+}
+
+.custom-slider-container.readonly {
+  --thumb-color: #ddd;
+  --thumb-border-color: #ddd;
+  --track-color: #c0c0c0;
+}
