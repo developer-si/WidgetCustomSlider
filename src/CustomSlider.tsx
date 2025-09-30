@@ -70,14 +70,14 @@ export function posStyle(frac: number, anchor: "center" | "left" | "right" | "au
         anchor === "center"
             ? "-50%"
             : anchor === "left"
-                ? "0%"
-                : anchor === "right"
-                    ? "-100%"
-                    : f === 0
-                        ? "0%"
-                        : f === 1
-                            ? "-100%"
-                            : "-50%";
+            ? "0%"
+            : anchor === "right"
+            ? "-100%"
+            : f === 0
+            ? "0%"
+            : f === 1
+            ? "-100%"
+            : "-50%";
 
     return {
         left,
@@ -142,7 +142,8 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
     } = props;
 
     const isReadOnly =
-        (props as any).readOnly === true || (sliderValueType === "dynamic" && props.sliderDynamicValue?.readOnly === true);
+        (props as any).readOnly === true ||
+        (sliderValueType === "dynamic" && props.sliderDynamicValue?.readOnly === true);
 
     const min = useMemo(
         () => getNumberFromValue(minValueType, minStaticValue, minDynamicValue, minExpressionValue, 0),
@@ -210,18 +211,24 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
 
     const debounceRef = useRef<number | undefined>(undefined);
     const triggerOnChange = useCallback((): void => {
-        if (isReadOnly || !onChange?.canExecute) return;
+        if (isReadOnly || !onChange?.canExecute) {
+            return;
+        }
         if (debounceMs && debounceMs > 0) {
             window.clearTimeout(debounceRef.current);
             debounceRef.current = window.setTimeout(() => onChange.execute(), debounceMs);
         } else {
             onChange.execute();
         }
-    }, [onChange, debounceMs]);
+    }, [onChange, debounceMs, isReadOnly]);
 
     const triggerOnEnd = useCallback((): void => {
-        if (isReadOnly) return;
-        if (onChangeEnd?.canExecute) onChangeEnd.execute();
+        if (isReadOnly) {
+            return;
+        }
+        if (onChangeEnd?.canExecute) {
+            onChangeEnd.execute();
+        }
     }, [onChangeEnd, isReadOnly]);
 
     const markPositions = useMemo<number[]>(() => {
@@ -257,20 +264,30 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
         [step, min, max, snapToMarks, markPositions]
     );
 
-    const commitSingle = useCallback((v: number): void => {
-        if (isReadOnly) return;
-        if (sliderValueType === "dynamic" && props.sliderDynamicValue?.setValue) {
-            props.sliderDynamicValue.setValue(new Big(v));
-        }
-    }, [sliderValueType, props.sliderDynamicValue, isReadOnly]);
+    const commitSingle = useCallback(
+        (v: number): void => {
+            if (isReadOnly) {
+                return;
+            }
+            if (sliderValueType === "dynamic" && props.sliderDynamicValue?.setValue) {
+                props.sliderDynamicValue.setValue(new Big(v));
+            }
+        },
+        [sliderValueType, props.sliderDynamicValue, isReadOnly]
+    );
 
-    const onSingle = useCallback((e: any): void => {
-        if (isReadOnly) return;
-        const v = nearestSnap(clamp(Number(e.target.value), min, max));
-        setSingle(v);
-        commitSingle(v);
-        triggerOnChange();
-    }, [nearestSnap, min, max, commitSingle, triggerOnChange, isReadOnly]);
+    const onSingle = useCallback(
+        (e: any): void => {
+            if (isReadOnly) {
+                return;
+            }
+            const v = nearestSnap(clamp(Number(e.target.value), min, max));
+            setSingle(v);
+            commitSingle(v);
+            triggerOnChange();
+        },
+        [nearestSnap, min, max, commitSingle, triggerOnChange, isReadOnly]
+    );
 
     const getTooltipText = useCallback(
         (type: "value" | "customText", tpl?: { value?: string }, v?: number): string => {
@@ -312,7 +329,13 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
     };
 
     return (
-        <div className={rootClass} style={cssVars} aria-label={ariaLabel} aria-labelledby={ariaLabelledBy} aria-disabled={isReadOnly || undefined}>
+        <div
+            className={rootClass}
+            style={cssVars}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            aria-disabled={isReadOnly || undefined}
+        >
             <div className="slider-wrapper">
                 <div className="slider-track">
                     <div className="slider-fill" style={{ left: 0, width: "100%" }} />
@@ -331,7 +354,7 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
                         aria-valuenow={single}
                         aria-orientation="horizontal"
                         disabled={isReadOnly}
-                        tabIndex={isReadOnly ? -1 : (props.tabIndex ?? 0)}
+                        tabIndex={isReadOnly ? -1 : props.tabIndex ?? 0}
                     />
                 </div>
 
@@ -353,8 +376,8 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
                             (m as any).labelType === "static"
                                 ? (m as any).labelStatic ?? ""
                                 : (m as any).labelType === "dynamic"
-                                    ? (m as any).labelDynamic?.value ?? ""
-                                    : (m as any).labelExpression?.value ?? "";
+                                ? (m as any).labelDynamic?.value ?? ""
+                                : (m as any).labelExpression?.value ?? "";
                         return (
                             <div key={i} className="slider-mark" style={posStyle(frac, "center")}>
                                 <div className="mark-dot" />
@@ -382,8 +405,9 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
 
                     {!rangeMode && sliderShowTooltip && (
                         <div
-                            className={`slider-tooltip central ${sliderTooltipAlwaysVisible ? "visible" : ""
-                                } ${centerPosClass}`}
+                            className={`slider-tooltip central ${
+                                sliderTooltipAlwaysVisible ? "visible" : ""
+                            } ${centerPosClass}`}
                             style={posStyle(fracOf(single), "center")}
                         >
                             {getTooltipText(sliderTooltipType as any, sliderTooltipTemplate, single)}
