@@ -1,7 +1,7 @@
 .custom-slider-container {
     position: relative;
     width: 100%;
-    --track-color: #3EA2F7;
+    --track-color: rgb(64, 162, 247);
     --track-bg: #cce5ff;
     --thumb-color: #fff;
     --thumb-size: 16px;
@@ -179,7 +179,6 @@
     --thumb-color: #fff;
     --thumb-border-color: #435686;
     --track-color: #c0c0c0;
-    opacity: 1 !important;
 
     cursor: not-allowed;
 }
