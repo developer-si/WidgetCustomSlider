@@ -385,7 +385,7 @@
                     <caption>Marks color (default)</caption>
                     <description />
                 </property>
-                <property key="thumbSize" type="integer" defaultValue="12">
+                <property key="thumbSize" type="integer" defaultValue="16">
                     <caption>Thumb size (px)</caption>
                     <description />
                 </property>

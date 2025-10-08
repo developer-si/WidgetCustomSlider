@@ -63,21 +63,38 @@ const nearestOf = (n: number, arr: number[]): number =>
 
 const clampPercentage = (p: number): number => Math.max(0, Math.min(100, p));
 
-export function posStyle(frac: number, anchor: "center" | "left" | "right" | "auto" = "auto"): CSSProperties {
+export function posStyle(
+    frac: number,
+    anchor: "center" | "left" | "right" | "auto" = "auto"
+): CSSProperties {
     const f = Math.max(0, Math.min(1, frac));
+
+    if (f === 0 && anchor === "left") {
+        return {
+            left: 0,
+            transform: "translateX(0%) translateY(var(--ty, -50%))"
+        } as CSSProperties;
+    }
+    if (f === 1 && anchor === "right") {
+        return {
+            right: 0,
+            transform: "translateY(var(--ty, -50%))"
+        } as CSSProperties;
+    }
+
     const left = `calc((100% - var(--thumb-total, var(--thumb-size))) * ${f} + (var(--thumb-total, var(--thumb-size)) / 2))`;
     const hx =
         anchor === "center"
             ? "-50%"
             : anchor === "left"
-            ? "0%"
-            : anchor === "right"
-            ? "-100%"
-            : f === 0
-            ? "0%"
-            : f === 1
-            ? "-100%"
-            : "-50%";
+                ? "0%"
+                : anchor === "right"
+                    ? "-100%"
+                    : f === 0
+                        ? "0%"
+                        : f === 1
+                            ? "-100%"
+                            : "-50%";
 
     return {
         left,
@@ -376,8 +393,8 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
                             (m as any).labelType === "static"
                                 ? (m as any).labelStatic ?? ""
                                 : (m as any).labelType === "dynamic"
-                                ? (m as any).labelDynamic?.value ?? ""
-                                : (m as any).labelExpression?.value ?? "";
+                                    ? (m as any).labelDynamic?.value ?? ""
+                                    : (m as any).labelExpression?.value ?? "";
                         return (
                             <div key={i} className="slider-mark" style={posStyle(frac, "center")}>
                                 <div className="mark-dot" />
@@ -405,9 +422,8 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
 
                     {!rangeMode && sliderShowTooltip && (
                         <div
-                            className={`slider-tooltip central ${
-                                sliderTooltipAlwaysVisible ? "visible" : ""
-                            } ${centerPosClass}`}
+                            className={`slider-tooltip central ${sliderTooltipAlwaysVisible ? "visible" : ""
+                                } ${centerPosClass}`}
                             style={posStyle(fracOf(single), "center")}
                         >
                             {getTooltipText(sliderTooltipType as any, sliderTooltipTemplate, single)}
