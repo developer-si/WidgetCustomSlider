@@ -176,9 +176,10 @@
 }
 
 .custom-slider-container.readonly {
-    --thumb-color: #ddd;
-    --thumb-border-color: #ddd;
+    --thumb-color: #fff;
+    --thumb-border-color: #435686;
     --track-color: #c0c0c0;
+    opacity: 1 !important;
 
     cursor: not-allowed;
 }
