@@ -49,19 +49,19 @@ function getNumberFromValue(
 
 const clamp = (n: number, min: number, max: number): number => (max < min ? n : Math.min(max, Math.max(min, n)));
 
-const roundToStep = (n: number, step: number, min: number): number => {
-    if (step <= 0) {
-        return n;
-    }
+const roundToStep = (n: number, step: number, min: number, decimals = 0): number => {
+    if (step <= 0) return Number(n.toFixed(decimals));
     const rel = new Big(n).minus(min).div(step);
-    const rounded = rel.round(0, Big.roundHalfUp);
-    return Number(rounded.times(step).plus(min).toString());
+    const rounded = rel.round(0, Big.roundHalfUp).times(step).plus(min);
+    // on sort en Number **déjà formaté** au nb de décimales du step
+    return Number(rounded.toFixed(decimals));
 };
 
 const nearestOf = (n: number, arr: number[]): number =>
     arr.reduce((b, x) => (Math.abs(x - n) < Math.abs(b - n) ? x : b), arr[0] ?? n);
 
 const clampPercentage = (p: number): number => Math.max(0, Math.min(100, p));
+
 
 export function posStyle(
     frac: number,
@@ -220,6 +220,11 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
     const [upper, setUpper] = useState<number>(Math.max(lowerInit, upperInit));
     const isVertical = orientation === "vertical";
 
+    const stepDecimals = useMemo(() => {
+        const s = String(step);
+        return s.includes(".") ? s.split(".")[1].length : 0;
+    }, [step]);
+
     useEffect(() => setSingle(singleInit), [singleInit]);
     useEffect(() => {
         setLower(Math.min(lowerInit, upperInit));
@@ -270,7 +275,7 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
 
     const nearestSnap = useCallback(
         (n: number): number => {
-            let t = roundToStep(n, step, min);
+            let t = roundToStep(n, step, min, stepDecimals);
 
             if (snapToMarks && markPositions.length) {
                 const m = nearestOf(t, markPositions);
@@ -308,15 +313,14 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
 
     const getTooltipText = useCallback(
         (type: "value" | "customText", tpl?: { value?: string }, v?: number): string => {
-            if (type === "customText") {
-                return tpl?.value ?? "";
-            }
-            if (typeof v === "number") {
-                return String(v);
-            }
-            return rangeMode ? `${lower} - ${upper}` : String(single);
+            const fmt = (x: number) => x.toFixed(stepDecimals);
+
+            if (type === "customText") return tpl?.value ?? "";
+
+            if (typeof v === "number") return fmt(v);
+            return rangeMode ? `${fmt(lower)} - ${fmt(upper)}` : fmt(single);
         },
-        [rangeMode, lower, upper, single]
+        [rangeMode, lower, upper, single, stepDecimals]
     );
 
     const percent = useCallback((v: number): number => (max === min ? 0 : ((v - min) / (max - min)) * 100), [min, max]);
@@ -361,7 +365,7 @@ export function CustomSlider(props: CustomSliderContainerProps): ReactElement {
                         className="slider-input"
                         min={min}
                         max={max}
-                        step={step || 0.000001}
+                        step={step > 0 ? step : "any"}
                         value={single}
                         onChange={onSingle}
                         onMouseUp={triggerOnEnd}
